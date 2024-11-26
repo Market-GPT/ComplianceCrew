@@ -3,6 +3,7 @@ import streamlit as st
 from main import run_crew
 import os
 import tempfile
+import pandas as pd
 
 # Set API keys using Streamlit secrets
 os.environ["SERPER_API_KEY"] = st.secrets["api_keys"]["SERPER_API_KEY"]
@@ -66,7 +67,33 @@ if uploaded_file is not None:
 
                 # Append agent response
                 if results:
-                    st.session_state['messages'].append({"role": "assistant", "content": str(results)})
+                    # st.session_state['messages'].append({"role": "assistant", "content": str(results)})
+                    if hasattr(results, "to_dict"):
+                        response_dict = results.to_dict()
+                    else:
+                        response_dict = vars(results) if isinstance(results, object) else results
+
+                    # Recursive function to flatten nested JSON
+                    def flatten_json(data, parent_key=''):
+                        items = []
+                        for key, value in (data.items() if isinstance(data, dict) else []):
+                            new_key = f"{parent_key}.{key}" if parent_key else key
+                            if isinstance(value, dict):
+                                items.extend(flatten_json(value, new_key).items())
+                            elif isinstance(value, list):
+                                items.append((new_key, ', '.join(map(str, value))))
+                            else:
+                                items.append((new_key, value))
+                        return dict(items)
+
+                    # Flatten the JSON and display it as a table
+                    st.subheader("Answer")
+                    flattened_data = flatten_json(response_dict)
+                    flattened_df = pd.DataFrame(flattened_data.items(), columns=["Key", "Value"])
+
+                    flattened_df = flattened_df.astype(str)
+
+                    st.table(flattened_df)
 
             except Exception as e:
                 st.error(f"An error occurred: {e}")
