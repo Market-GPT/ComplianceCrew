@@ -26,6 +26,7 @@ class FraudDetectorCrew:
 
     agents_config = "config/agents.yaml"
     tasks_config = "config/tasks.yaml"
+    file_path = ""  # This will be set dynamically
 
     @agent
     def financial_forensics_analyst(self) -> Agent:

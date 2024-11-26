@@ -1,12 +1,9 @@
-
 import sys
 from crew import FraudDetectorCrew
 import os
 
-
-
 os.environ["SERPER_API_KEY"] = "3da6df61b42b2e2d0e6feb98912abb4f31028e04"
-os.environ["OPENAI_API_KEY"] = ""
+os.environ["OPENAI_API_KEY"] = "sk-proj-OEjgSk0FDWF0kFKNlECwT3BlbkFJemihvOFiziPy7dLt9omO"
 
 dataset_disc = """
 Transaction ID: Unique identifier for each transaction.
@@ -23,6 +20,7 @@ Country Code: Origin of the transaction.
 Transaction Chain: Number of linked transactions (e.g., A → B → C).
 """
 
+
 def run():
     # Replace with your inputs, it will automatically interpolate any tasks and agents information
     inputs = {
@@ -31,6 +29,22 @@ def run():
         "topic": "Anti-money laundering",
     }
     FraudDetectorCrew().crew().kickoff(inputs=inputs)
+    
+def run_crew(customer_name, customer_info, topic, dataset_path):
+    # Replace with your inputs, it will automatically interpolate any tasks and agents information
+    inputs = {
+        "customer_name": customer_name,
+        "customer_info": customer_info,
+        "topic": topic,
+    }
+
+    # Update the file path in crew.py to point to the uploaded file
+    FraudDetectorCrew.file_path = dataset_path
+
+    # Run the crew
+    crew_instance = FraudDetectorCrew().crew()
+    results = crew_instance.kickoff(inputs=inputs)
+    return results
 
 
 def train():
