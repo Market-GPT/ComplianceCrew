@@ -1,25 +1,23 @@
-[project]
-name = "fraud_detector"
+[tool.poetry]
+name = "compliancecrew"
 version = "0.1.0"
-description = "fraud-detector using crewAI"
-authors = [
-    { name = "Your Name", email = "you@example.com" },
-]
-requires-python = ">=3.10,<=3.13"
-dependencies = [
-    "crewai[tools]>=0.76.2",
-    "streamlit>=1.40.2",
-]
+description = ""
+authors = ["Auro Soni <aurokumar926@gmail.com>"]
+readme = "README.md"
 
-[project.scripts]
+[tool.poetry.dependencies]
+python = ">=3.11,<=3.13"
+streamlit = ">=1.40.2"
+crewai = {version = ">=0.76.2", extras = ["tools"]}
+
+[tool.poetry.scripts]
 fraud_detector = "fraud_detector.main:run"
 run_crew = "fraud_detector.main:run"
 train = "fraud_detector.main:train"
 replay = "fraud_detector.main:replay"
 test = "fraud_detector.main:test"
 
+
 [build-system]
-requires = [
-    "hatchling",
-]
-build-backend = "hatchling.build"
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
