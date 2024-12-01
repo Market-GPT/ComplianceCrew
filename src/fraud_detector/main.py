@@ -30,16 +30,13 @@ def run():
     }
     FraudDetectorCrew().crew().kickoff(inputs=inputs)
     
-def run_crew(customer_name, customer_info, topic, dataset_path):
+def run_crew():
     # Replace with your inputs, it will automatically interpolate any tasks and agents information
     inputs = {
-        "customer_name": customer_name,
-        "customer_info": customer_info,
-        "topic": topic,
+        "customer_name": "irtika",
+        "customer_info": "The customer transaction history can be accessed using file_read_tool, this is the dataset description: \n" + dataset_disc,
+        "topic": "Anti-money laundering",
     }
-
-    # Update the file path in crew.py to point to the uploaded file
-    FraudDetectorCrew.file_path = dataset_path
 
     # Run the crew
     crew_instance = FraudDetectorCrew().crew()
@@ -52,7 +49,7 @@ def train():
     Train the crew for a given number of iterations.
     """
     inputs = {
-        "customer_name": "John Doe",
+        "customer_name": "Irtika",
         "customer_info": "The customer transaction history can be accessed using file_read_tool",
         "topic": "Credit card",
     }
@@ -81,7 +78,7 @@ def test():
     Test the crew execution and returns the results.
     """
     inputs = {
-        "customer_name": "John Doe",
+        "customer_name": "Irtika",
         "customer_info": "Company Enterprise",
         "topic": "AI Agents",
     }

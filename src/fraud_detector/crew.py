@@ -7,7 +7,7 @@ from pydantic import BaseModel, Field
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 
-file_path = "/Dummy_Money_Laundering_Dataset.csv"
+file_path = "../../Dummy_Money_Laundering_Dataset.csv"
 class RiskAssesment(BaseModel):
     """Risk Assesment model for the Fraud Detector crew."""
 
@@ -26,7 +26,7 @@ class FraudDetectorCrew:
 
     agents_config = "config/agents.yaml"
     tasks_config = "config/tasks.yaml"
-    file_path = ""  # This will be set dynamically
+    # file_path = ""  # This will be set dynamically
 
     @agent
     def financial_forensics_analyst(self) -> Agent:

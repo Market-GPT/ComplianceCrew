@@ -15,7 +15,7 @@ uploaded_file = st.sidebar.file_uploader("Choose a CSV file", type=["csv"])
 
 st.sidebar.title("Customer Information")
 
-customer_name = st.sidebar.text_input("Customer Name", value="John Doe")
+customer_name = st.sidebar.text_input("Customer Name", value="Irtika")
 topic = st.sidebar.text_input("Topic", value="Anti-money laundering")
 
 # Dataset description
@@ -39,30 +39,30 @@ st.title("Fraud Detection Crew Chat Interface")
 if 'messages' not in st.session_state:
     st.session_state['messages'] = []
 
-user_input = st.text_input("Enter your prompt here:")
+# user_input = st.text_input("Enter your prompt here:")
 
-if st.button("Send") and user_input:
-    # Append user message
-    st.session_state['messages'].append({"role": "user", "content": user_input})
+# if st.button("Send") and user_input:
+#     # Append user message
+#     st.session_state['messages'].append({"role": "user", "content": user_input})
 
-if uploaded_file is not None:
-    # Save the uploaded file temporarily
-    with tempfile.NamedTemporaryFile(delete=False, suffix='.csv') as tmp_file:
-        tmp_file.write(uploaded_file.getvalue())
-        tmp_file_path = tmp_file.name
+# if uploaded_file is not None:
+#     # Save the uploaded file temporarily
+#     with tempfile.NamedTemporaryFile(delete=False, suffix='.csv') as tmp_file:
+#         tmp_file.write(uploaded_file.getvalue())
+#         tmp_file_path = tmp_file.name
 
     # Prepare customer_info with dataset description
-    customer_info = f"The customer transaction history can be accessed using the file at {tmp_file_path}, this is the dataset description: \n{dataset_description}"
+    customer_info = f"The customer transaction history can be accessed using the file at /Dummy_Money_Laundering_Dataset.csv, this is the dataset description: \n{dataset_description}"
 
-    if st.button("Run Fraud Detection Crew"):
+if st.button("Run Fraud Detection Crew"):
         with st.spinner('Processing...'):
             try:
                 # Run the crew and get results
                 results = run_crew(
-                    customer_name=customer_name,
-                    customer_info=customer_info,
-                    topic=topic,
-                    dataset_path=tmp_file_path
+                    # customer_name=customer_name,
+                    # customer_info=customer_info,
+                    # topic=topic,
+                    # dataset_path="/Dummy_Money_Laundering_Dataset.csv"
                 )
 
                 # Append agent response
@@ -96,7 +96,7 @@ if uploaded_file is not None:
                     st.table(flattened_df)
 
             except Exception as e:
-                st.error(f"An error occurred: {e}")
+                st.error(f"An error occurred: {e}")    
 
 # Display the chat messages
 for message in st.session_state['messages']:
